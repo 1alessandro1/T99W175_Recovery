@@ -158,7 +158,7 @@ To change the active slot, useful when testing different kinds of firmware, you 
 
 To use boot+modem+system:
 
-``
+```
 echo -ne '\x00' | dd of=/dev/mtdblock21 bs=1 seek=28 count=1 conv=notrunc 
 ```
 
