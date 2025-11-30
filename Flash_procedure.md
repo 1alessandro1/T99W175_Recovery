@@ -9,13 +9,16 @@ if you have any concerns about the steps included in this guide before following
 
 This guide assumes that:
 
-- the steps to obtain a working pyenv for the [project](https://github.com/bkerler/edl) have been already followed correctly and the command `edl -h` returns the help page of the python program with no issues.
+- The steps to obtain a working pyenv for the [project](https://github.com/bkerler/edl) have been already followed correctly and the command `edl -h` returns the help page of the python program with no issues.
 
-- You're trying to fix a broken T99W175 in the following states: 9008 15s loop, 9008 stable. T99W175 in the deadly customer = 3. 
+- You're trying to fix a broken T99W175 in the following states: 
+   1. 9008 15s loop
+   2. 9008 stable with no reboots. 
+   3. Deadly *CUSTOMER 3* or any other qlink error states (use 5GPHY board with 3.3V on pin3 to enable USB and once the device appears, use `adb wait-for-device && adb reboot edl` if you're stuck in a wrong *CUSTOMER*, customer 0 is the recommended) 
 
 - You have the USB+Ethernet 5GPHY adapter to make it work in USB mode even if the bootpoint under the modem for USB is broken
 
-- In case anything breaks, the T99W175 EDL bootpoint is accessible by flipping the board with tweezers or solder (not recommended because the bootpoints are easily destroyed by bad soldering iron usage). I recommend to use a thin cable, peeling off the cover and touching the EDL bootpoint platforms making a short between the two by pushing the thin copper wires for that 3-4 seconds while powering the T99W175 on. This way, you can read the guide again by shorting it without damaging it. 
+- In case anything breaks, the T99W175 EDL bootpoint is accessible by flipping the board, by with tweezers or solder (not recommended because the bootpoints are easily destroyed by bad soldering iron usage). I recommend to use a thin cable, peeling off the jacket and touching the EDL testpoints with hair-style copper wires making a short between the two by pushing for 3-4 seconds while connecting the T99W175 to the USB port. This way, you can always enter 9008 as many times as you like, without having to deal with solder and risk related to damaging the pins.
 
 ## Hardware variants
 
@@ -27,6 +30,7 @@ Foxconn released two main hardware variants for this T99W175 5G NGFF 30x42 modem
 **Personal recommendation**: check first with the command `edl printgpt` what the actual layout looks like, use the correct parameters for the usb device listed in `lsusb` looking for *Foxconn QUSB_BULK* such as `--vid 105b` and `--vid 105b` and `--loader=/path/to/prog_firehose_sdx55.mbn`  before flashing the dumps I provide. 
 
  Example 1: `edl printgpt --vid 105b --pid e0ab --loader=/home/user/prog_firehose_sdx55.mbn`
+
  Example 2: `edl printgpt --vid 105b --pid E0B0 --loader=/home/user/prog_firehose_sdx55.mbn`
 
 
@@ -61,7 +65,47 @@ edl r xbl_config xbl_config.bin --vid 105b --pid e0ab --loader="/home/ale/Qualco
 
 ## Flashing using FULLNAND.bin
 
-If somebody provided you a copy of the FULLNAND.bin, you can write it to the T99W175 with the caveat that the UBI partitions and the ones containing the kernel are ERASED before rebooting to fastboot:
+You can flash a copy of FULLNAND.bin, you can flash it too. Read carefully below before executing it. This is the command:
+
+```
+edl ws 0 FULLNAND.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+```
+
+**NOTE:** you can write it to the T99W175 with the caveat that the UBI partitions and the ones containing the kernel are ERASED before rebooting to the system (Linux system inside the T99W175).
+
+There are two ways to do this: 
+
+   1. (FASTER) Erase only boot and recovery, then unplug the cable and the modem will go automatically in fastboot.
+
+   ```
+   edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   ```
+   
+   Once the modem reboots in fastboot mode, you can run the following:
+
+   ```
+   fastboot erase system;
+   fastboot erase recoveryfs; 
+   fastboot erase modem; 
+   fastboot erase fsg;
+   ```
+
+
+   2. (SLOWER) You can do this from edlclient as well, but it will be slower writing zeroes than `fastboot erase`:
+   
+   ```
+   edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e system --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e recoveryfs --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e modem --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e fsg --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   ```
+
+
+Explanation:
+
  - system (contains Linux rootfs)
  - recoveryfs (copy of system, called if system or boot partition is damaged, together with fsg and recovery)
  - modem (SDX55 firmware, uploaded at boot)
@@ -69,20 +113,65 @@ If somebody provided you a copy of the FULLNAND.bin, you can write it to the T99
  - boot (contains the kernel)
  - recovery (contains a copy of the kernel)
 
-I recommend to keep also the kernel and its copy (recovery) ERASED, so the fastboot state can always be reached, given that the other partitions are sane or just flashed 
-Are erased and flashed ONLY via fastboot, in a second step. You can erase them in the following way:
-
-```
-edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-edl e system --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-edl e recoveryfs --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-edl e modem --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-edl e fsg --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-```
+To lower the number of times you have to use 9008, do not flash `boot` and `recovery` until you're sure that everything works as expected. This way, the fastboot state can always be reached after a power loss (cable disconnection), given that the other partitions (abl, xbl, uefi, qhee, etc) were correctly flashed.
 
 
 This step is NECESSARY before attempting to boot the modem, otherwise it will be stuck in an unknown state where the EDL boot pin will be necessary again and you have to go back and short it to reach 9008 again.
+
+
+## Flashing firmware
+
+Once all the other partitions are in a good state, you can proceed from fastboot mode to flash all the rest. Start with the UBIs such as system, modem and then the others.
+
+```
+fastboot flash system t99w175_cfw_sdxprairie_sysfs.ubi
+fastboot flash modem NON-HLOS_sdxprairie_cfw.ubi
+fastboot flash recoveryfs t99w175_cfw_sdxprairie_sysfs.ubi
+fastboot flash fsg NON-HLOS_sdxprairie_cfw.ubi
+```
+
+Then to boot the system you can run:
+
+
+```
+fastboot boot t99w175_boot.img
+```
+
+**Note 1:** Beware to use "*boot*" now, not "*flash*": we want to make sure that a power disconnection will bring us again at the bootloader stage (fastboot) in case anything goes wrong. 
+
+**Note 2:** The first time, the modem will boot, unpack the UBIs and reboot. For what we did, we expect it to go to fastboot again. Run again `fastboot boot t99w175_boot.img`, this time, it shouldn't reboot: if it does, something is incompatible and other ways have to be followed to fix it. From the fastboot state you can reach 9008, flash firmware, erase partitions way easier/faster than using 9008 and the `.mbn` loader.  
+
+After you get the T99W175 to boot without any issues with fastboot boot you may proceed to run: 
+
+```
+fastboot flash boot t99w175_boot.img
+fastboot flash recovery t99w175_boot.img
+```
+
+Your T99W175 should work as expected. 
+
+
+## Additional notes
+
+To change the active slot, useful when testing different kinds of firmware, you can use the following commands after entering a shell, for example with `adb shell`:
+
+
+To use boot+modem+system:
+
+``
+echo -ne '\x00' | dd of=/dev/mtdblock21 bs=1 seek=28 count=1 conv=notrunc 
+``
+
+To use recovery+fsg+recoveryfs:
+
+```
+echo -ne '\x01' | dd of=/dev/mtdblock21 bs=1 seek=28 count=1 conv=notrunc 
+```
+
+
+
+
+
 
 
 
