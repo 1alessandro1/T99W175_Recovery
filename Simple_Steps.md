@@ -67,6 +67,13 @@ fastboot flash recovery t99w175_boot.img
 
 Your T99W175 should work as expected. 
 
+## Optional: Add webui
+
+```
+adb shell rm -rf /WEBSERVER/www
+adb push www /WEBSERVER
+adb shell chmod 755 -R /WEBSERVER/
+```
 
 Written by @1alessandro1 at Github. Credits include also @stich86.
 
