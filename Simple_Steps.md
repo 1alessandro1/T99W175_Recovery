@@ -68,8 +68,7 @@ fastboot flash recovery t99w175_boot.img
 Your T99W175 should work as expected. 
 
 
-
-
+Written by @1alessandro1 at Github. Credits include also @stich86.
 
 
 
