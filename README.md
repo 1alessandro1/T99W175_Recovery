@@ -62,6 +62,14 @@ READ xbl_config partition FROM the modem to file (xbl_config.bin)
 edl r xbl_config xbl_config.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
 
 ```
+## MAKING BACKUPS of your EFS
+
+If you managed to restore `sbl` and  `mibib` be sure to backup `efs2` partition too in case you want to use your own after flashing one FULLNAND from a friend.
+
+```
+edl r efs2 efs2.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+```
+This will create an efs2.bin file inside the current directory. Keep it somewhere safe.
 
 ## Flashing using FULLNAND.bin
 
