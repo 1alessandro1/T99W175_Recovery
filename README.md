@@ -12,7 +12,7 @@ This guide assumes that:
 - The steps to obtain a working pyenv for the [project](https://github.com/bkerler/edl) have been already followed correctly and the command `edl -h` returns the help page of the python program with no issues.
 
 - You're trying to fix a broken T99W175 in the following states: 
-   1. 9008 15s loop
+   1. 9008 20s loop
    2. 9008 stable with no reboots. 
    3. Deadly *CUSTOMER 3* or any other qlink error states (use 5GPHY board with 3.3V on pin3 to enable USB and once the device appears, use `adb wait-for-device && adb reboot edl` if you're stuck in a wrong *CUSTOMER*, customer 0 is the recommended) 
 
