@@ -25,7 +25,7 @@ This guide assumes that:
 Foxconn released (as of today) three main hardware variants for this T99W175 5G NGFF 30x42 modem. The known variant code can be found on the top of the modem itself, near the 5 pin M.2 key B connector. These two hardware variants have different *partition layout* also called *MIBIB* in which is described the start and the end of every partition. 
  - V045 or less is a 5 pin modem, needs to be soldered on the back regardless of whether there are 3.3V on the pin3 or not
  - V065,V085,V105 (or in short, V105 and earlier): have the "old" layout, without the partitions *usb_qti* and *ipa_fw*
- - V205, V305 (or in short, V205 and greater): usually come with the "new" layout, **with** *usb_qti* and *ipa_fw*
+ - V205, V305 (or in short, V205 and greater): usually come with the "new" layout, **with** *usb_qti* and *ipa_fw*: **V205 must have pin3 isolated from the stock M.2 key B connector because the specification puts pin3 to GND and some modems will fail to power up and make a coil whine noise if not isolated from GND.**
 
 **Personal recommendation**: check first with the command `edl printgpt` what the actual layout looks like, use the correct parameters for the usb device listed in `lsusb` looking for *Foxconn QUSB_BULK* such as `--vid 105b` and `--vid 105b` and `--loader=/path/to/prog_firehose_sdx55.mbn`  before flashing the dumps I provide. 
 
