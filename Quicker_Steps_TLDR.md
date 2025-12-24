@@ -13,10 +13,10 @@ Foxconn released two main hardware variants for this T99W175 5G NGFF 30x42 modem
 
 You can obtain a copy of FULLNAND.bin for your model, you can flash it via [edlclient](https://github.com/bkerler/edl). Read carefully below before executing it. This is the command:
 
-```
-edl ws 0 FULLNAND_V085.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-edl ws 0 FULLNAND_V205.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-```
+   ```
+   edl ws 0 FULLNAND_V085.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl ws 0 FULLNAND_V205.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   ```
 
 **NOTE:** you can write it to the T99W175 with the caveat that the UBI partitions and the ones containing the kernel are ERASED before rebooting to the system (Linux system inside the T99W175).
 
@@ -40,19 +40,19 @@ Once the modem reboots in fastboot mode, you can run the following:
 
 Once all the other partitions are in a good state, you can proceed from fastboot mode to flash all the rest. Start with the UBIs such as system, modem and then the others.
 
-```
-fastboot flash system t99w175_cfw_sdxprairie_sysfs.ubi
-fastboot flash modem NON-HLOS_sdxprairie_cfw.ubi
-fastboot flash recoveryfs t99w175_cfw_sdxprairie_sysfs.ubi
-fastboot flash fsg NON-HLOS_sdxprairie_cfw.ubi
-```
+   ```
+   fastboot flash system t99w175_cfw_sdxprairie_sysfs.ubi
+   fastboot flash modem NON-HLOS_sdxprairie_cfw.ubi
+   fastboot flash recoveryfs t99w175_cfw_sdxprairie_sysfs.ubi
+   fastboot flash fsg NON-HLOS_sdxprairie_cfw.ubi
+   ```
 
 Then to boot the system you can run:
 
 
-```
-fastboot boot t99w175_boot.img
-```
+   ```
+   fastboot boot t99w175_boot.img
+   ```
 
 **Note 1:** Beware to use "*boot*" now, not "*flash*": we want to make sure that a power disconnection will bring us again at the bootloader stage (fastboot) in case anything goes wrong. 
 
@@ -75,7 +75,7 @@ adb push www /WEBSERVER
 adb shell chmod 755 -R /WEBSERVER/
 ```
 
-Written by @1alessandro1 at Github. Credits include also @stich86.
+Written by [@1alessandro1](https://github.com/1alessandro1) Credits include also [@stich86](https://github.com/stich86).
 
 
 
