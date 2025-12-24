@@ -168,7 +168,7 @@ To use recovery+fsg+recoveryfs:
 echo -ne '\x01' | dd of=/dev/mtdblock21 bs=1 seek=28 count=1 conv=notrunc 
 ```
 
-
+Written by @1alessandro1 at Github. Credits include also @stich86.
 
 
 
