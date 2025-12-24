@@ -9,7 +9,7 @@ if you have any concerns about the steps included in this guide before following
 
 This guide assumes that:
 
-- The steps to obtain a working pyenv for the [project](https://github.com/bkerler/edl) have been already [followed correctly](https://github.com/1alessandro1/EDL_installation_wiki) and the command `edl -h` returns the help page of the python program with no issues.
+- The steps to obtain a working pyenv for the [project](https://github.com/bkerler/edl) have been already [followed correctly](https://github.com/1alessandro1/EDL_installation_wiki/blob/main/README_EN.md) and the command `edl -h` returns the help page of the python program with no issues.
 
 - You're trying to fix a broken T99W175 in the following states: 
    1. 9008 20s loop
