@@ -34,7 +34,7 @@ Foxconn released (as of today) three main hardware variants for this T99W175 5G 
  Example 2: `edl printgpt --vid 105b --pid E0B0 --loader=/home/user/prog_firehose_sdx55.mbn`
 
 
- **NOTE**: the *sbl* partition and *mibib* must be in sane condition (not erased or overwritten by faulty flashing) in order to see the layout with the command `edl pringpt`. If `edl pringpt ` doesn't print anything, the layout must be guessed by reading the hardware variant, and NAND has to be manually flashed with sector offsets just for *MIBIB* and *SBL*:
+ **NOTE**: the *sbl* partition and *mibib* must be in sane condition (not erased or overwritten by faulty flashing) in order to see the layout with the command `edl pringpt`. If `edl printgpt ` doesn't print anything, the layout must be guessed by reading the hardware variant, and NAND has to be manually flashed with sector offsets just for *MIBIB* and *SBL*:
 
 
  Example
