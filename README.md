@@ -22,8 +22,8 @@ This guide assumes that:
 
 ## Hardware variants
 
-Foxconn released two main hardware variants for this T99W175 5G NGFF 30x42 modem. The known variant code can be found on the top of the modem itself, near the 5 pin M.2 key B connector. These two hardware variants have different *partition layout* also called *MIBIB* in which is described the start and the end of every partition. 
- - V045 is a 5 pin modem, needs to be soldered on the back regardless of whether there are 3.3V on the pin3 or not
+Foxconn released (as of today) three main hardware variants for this T99W175 5G NGFF 30x42 modem. The known variant code can be found on the top of the modem itself, near the 5 pin M.2 key B connector. These two hardware variants have different *partition layout* also called *MIBIB* in which is described the start and the end of every partition. 
+ - V045 or less is a 5 pin modem, needs to be soldered on the back regardless of whether there are 3.3V on the pin3 or not
  - V065,V085,V105 (or in short, V105 and earlier): have the "old" layout, without the partitions *usb_qti* and *ipa_fw*
  - V205, V305 (or in short, V205 and greater): usually come with the "new" layout, **with** *usb_qti* and *ipa_fw*
 
