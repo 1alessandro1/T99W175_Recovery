@@ -43,12 +43,12 @@ Foxconn released (as of today) three main hardware variants for this T99W175 5G 
   **Remember**: these commands will **overwrite** the current partition layout regardless if it existed before or not.
  ```
     Erase first, just to be sure:
-    edl es 0 639 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
-    edl es 640 1279 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl es 0 640 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Erase SBL
+   edl es 640 640 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Erase MIBIB
 
-    Write sectors:
-    edl ws 0 sbl.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" 
-    edl ws 640 mibib.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl ws 0 sbl.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Write SBL manually (needed for printgpt to work)
+   edl ws 640 mibib.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Write MIBIB manually (needed for printgpt to work)
+
  ```
 
 You may now proceed by flashing all the other partitions not by using sector offsets but by using sector names. The EDL python program will handle the offsets for you. 
