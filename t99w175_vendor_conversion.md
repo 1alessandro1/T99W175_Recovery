@@ -274,7 +274,7 @@ echo "Vendor is Lenovo x86 unknown 22"
 
 # BEWARE of the UNSAFE CUSTOMERs information
 
-Some customers were tested by the community. The unsafe customers are grouped into this list, BEWARE to not use the unsafe modes.
+Some customers were tested by the community. The unsafe customers are grouped into this list, BEWARE to not use the unsafe modes. Thanks to 4PDA T99W175 forum for the information.
 
 ```
 AT^CUSTOMER=0 Qualcomm T99W175
