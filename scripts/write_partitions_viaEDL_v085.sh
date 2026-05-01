@@ -1,9 +1,9 @@
 # wait for device to be just ready if stuck on 20s loop
-edl es 0 639 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
-edl es 640 1279 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+edl es 0 640 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Erase SBL
+edl es 640 640 --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Erase MIBIB
 
-edl ws 640 mibib.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
-edl ws 0 sbl.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" 
+edl ws 0 sbl.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Write SBL manually (needed for printgpt to work)
+edl ws 640 mibib.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn" # Write MIBIB manually (needed for printgpt to work)
 
 # wait for device to be just ready if stuck on 20s loop
 
