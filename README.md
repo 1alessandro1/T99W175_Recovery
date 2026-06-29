@@ -57,11 +57,11 @@ Example:
 
 ``` 
 WRITE uefi.bin partition TO the modem
-edl w uefi uefi.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+edl w uefi uefi.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
 
 READ xbl_config partition FROM the modem to file (xbl_config.bin)
 
-edl r xbl_config xbl_config.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+edl r xbl_config xbl_config.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
 
 ```
 ## MAKING BACKUPS of your EFS
@@ -69,7 +69,7 @@ edl r xbl_config xbl_config.bin --vid 105b --pid e0ab --loader="/home/ale/Qualco
 If you managed to restore `sbl` and  `mibib` be sure to backup `efs2` partition too in case you want to use your own after flashing one FULLNAND from a friend.
 
 ```
-edl r efs2 efs2.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+edl r efs2 efs2.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
 ```
 This will create an efs2.bin file inside the current directory. Keep it somewhere safe.
 
@@ -78,7 +78,7 @@ This will create an efs2.bin file inside the current directory. Keep it somewher
 You can flash a copy of FULLNAND.bin, you can flash it too. Read carefully below before executing it. This is the command:
 
 ```
-edl ws 0 FULLNAND.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+edl ws 0 FULLNAND.bin --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
 ```
 
 **NOTE:** you can write it to the T99W175 with the caveat that the UBI partitions and the ones containing the kernel are ERASED before rebooting to the system (Linux system inside the T99W175).
@@ -105,12 +105,12 @@ There are two ways to do this:
    2. (SLOWER) You can do this from edlclient as well, but it will be slower writing zeroes than `fastboot erase`:
    
    ```
-   edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-   edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-   edl e system --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-   edl e recoveryfs --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-   edl e modem --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-   edl e fsg --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl e system --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl e recoveryfs --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl e modem --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl e fsg --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
    ```
 
 
