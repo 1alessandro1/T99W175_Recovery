@@ -88,8 +88,8 @@ There are two ways to do this:
    1. (FASTER) Erase only boot and recovery, then unplug the cable and the modem will go automatically in fastboot.
 
    ```
-   edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
-   edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn
+   edl e boot --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
+   edl e recovery --vid 105b --pid e0ab --loader="/home/ale/Qualcomm_EDL/prog_firehose_sdx55.mbn"
    ```
    
    Once the modem reboots in fastboot mode, you can run the following:
